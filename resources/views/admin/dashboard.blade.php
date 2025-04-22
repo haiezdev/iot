@@ -2,174 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+       
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f4f4f4;
         }
 
-        .navbar {
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
             background-color: #007bff;
             color: white;
-            padding: 15px;
-            text-align: center;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            padding: 20px;
         }
 
-        .navbar .title {
-            font-size: 20px;
-            font-weight: bold;
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 22px;
         }
 
-        .navbar form {
-            margin: 0;
-        }
-
-        .navbar button {
+        .sidebar a, .sidebar form button {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 16px;
             background: none;
             border: none;
-            color: white;
-            font-size: 16px;
+            text-align: left;
+            padding: 5px 0;
             cursor: pointer;
         }
 
-        .navbar button:hover {
+        .sidebar a:hover,
+        .sidebar form button:hover {
             text-decoration: underline;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
         }
 
-        h1 {
+        .main-content h1 {
             text-align: center;
             color: #333;
         }
 
         .card-container {
             display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+            flex-wrap: wrap;
             gap: 20px;
+            margin-top: 30px;
         }
 
         .card {
-            background-color: #ffffff;
+            flex: 1 1 calc(25% - 20px);
+            background-color: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 23%;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             text-align: center;
+            min-width: 200px;
         }
 
         .card h3 {
-            font-size: 20px;
+            font-size: 18px;
             color: #007bff;
         }
 
         .card p {
-            font-size: 16px;
-            color: #333;
+            font-size: 14px;
             margin: 10px 0;
+            color: #444;
         }
 
         .card a {
             color: #007bff;
-            text-decoration: none;
             font-weight: bold;
+            text-decoration: none;
         }
 
         .card a:hover {
             text-decoration: underline;
         }
 
-        .logout-button {
-            display: block;
-            margin: 40px auto 0;
-            padding: 12px 25px;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 200px;
+        .sidebar form {
+            margin: 0;
         }
-
-        .logout-button:hover {
-            background-color: #0056b3;
-        }
-        .change-password-link {
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    font-weight: normal;
-}
-
-.change-password-link:hover {
-    text-decoration: underline;
-}
-
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="title">Admin Dashboard</div>
+    <div class="sidebar">
+        <h2>AIoT Admin</h2>
+        <a href="{{ route('admin.dashboard') }}">🏠 Trang chủ</a>
+        <a href="{{ route('admin.users.index') }}">👥 Quản lý người dùng</a>
+        <a href="#">📟 Thiết bị</a>
+        <a href="#">📊 Báo cáo</a>
+        <a href="{{ route('admin.password.form') }}">🔒 Đổi mật khẩu</a>
 
-    <div style="display: flex; gap: 20px; align-items: center;">
-        <a href="{{ route('admin.password.form') }}" class="change-password-link">Đổi mật khẩu</a>
-
-        <form method="POST" action="{{ route('admin.logout') }}">
+        <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit">Đăng xuất</button>
+            <button type="submit">🚪 Đăng xuất</button>
         </form>
     </div>
-</div>
 
-
-    <div class="container">
-        <h1>Welcome, Admin</h1>
-
-        <div class="card-container">
-            <div class="card">
-                <h3>Manage Users</h3>
-                <p>Create, update, or delete users.</p>
-                <a href="#">Go to Users</a>
-            </div>
-            <div class="card">
-                <h3>Manage Devices</h3>
-                <p>Create or update device settings.</p>
-                <a href="#">Go to Devices</a>
-            </div>
-            <div class="card">
-                <h3>Reports</h3>
-                <p>View system reports and logs.</p>
-                <a href="#">Go to Reports</a>
-            </div>
-            <div class="card">
-                <h3>Settings</h3>
-                <p>Update system configurations.</p>
-                <a href="#">Go to Settings</a>
-            </div>
-        </div>
-
-        <!-- <form method="POST" action="{{ route('admin.logout') }}">
-            @csrf
-            <button type="submit" class="logout-button">Logout</button>
-        </form> -->
+    <div class="main-content">
+        <h1>Chào mừng Admin!</h1>
     </div>
-
 </body>
 </html>

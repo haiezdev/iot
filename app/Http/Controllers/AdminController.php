@@ -6,46 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 class AdminController extends Controller
 {
-    // Hiển thị form đăng nhập
-    public function showLoginForm()
-    {
-        return view('admin.login'); // Chúng ta sẽ tạo view sau
-    }
-
-    // Xử lý đăng nhập
-    public function login(Request $request)
-    {
-        // Kiểm tra dữ liệu nhập vào
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:8',
-        ]);
-
-        // Kiểm tra thông tin đăng nhập
-        $credentials = $request->only('email', 'password');
-
-        // Sử dụng guard admin để đăng nhập
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->intended('admin/dashboard');
-        }
-
-        // Nếu đăng nhập thất bại
-        return back()->withErrors(['email' => 'Invalid credentials']);
-    }
-
-    // Đăng xuất
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout();
-    
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-    
-        return redirect()->route('admin.login')->with('message', 'Đăng xuất thành công!');
-    }
-
     public function dashboard()
 {
     return view('admin.dashboard');
@@ -74,6 +37,88 @@ public function updatePassword(Request $request)
 
     return back()->with('message', 'Đổi mật khẩu thành công!');
 }
-    
+// public function showCreateUserForm() {
+//     return view('admin.create-user');
+// }
+
+// public function createUser(Request $request) {
+//     $request->validate([
+//         'name' => 'required|string',
+//         'email' => 'required|email|unique:users',
+//         'password' => 'required|min:6',
+//         'role' => 'required|in:operator,supervisor,team_lead',
+//     ]);
+
+//     User::create([
+//         'name' => $request->name,
+//         'email' => $request->email,
+//         'password' => Hash::make($request->password),
+//         'role' => $request->role,
+//     ]);
+
+//     return back()->with('message', 'Tạo người dùng thành công!');
+// }
+// Danh sách
+public function listUsers() {
+    $users = User::all();
+    return view('users.index', compact('users'));
+}
+
+// Form tạo
+public function createUserForm() {
+    return view('users.create');
+}
+
+// Lưu user mới
+public function storeUser(Request $request) {
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6',
+        'role' => 'required|in:operator,supervisor,team_lead',
+    ]);
+
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+    ]);
+
+    return redirect()->route('users.index')->with('message', 'Tạo người dùng thành công!');
+}
+
+// Form sửa
+public function editUser($id) {
+    $user = User::findOrFail($id);
+    return view('users.edit', compact('user'));
+}
+
+// Cập nhật
+public function updateUser(Request $request, $id) {
+    $user = User::findOrFail($id);
+
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'role' => 'required|in:operator,supervisor,team_lead',
+    ]);
+
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'role' => $request->role,
+    ]);
+
+    return redirect()->route('users.index')->with('message', 'Cập nhật thành công!');
+}
+
+// Xoá
+public function deleteUser($id) {
+    $user = User::findOrFail($id);
+    $user->delete();
+    return redirect()->route('users.index')->with('message', 'Xoá thành công!');
+
+}
 }
 

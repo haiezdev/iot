@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -124,7 +124,7 @@
             </div>
         @endif
 
-        <form action="{{ url('admin/login') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="input-group">
                 <label for="email">Email:</label>

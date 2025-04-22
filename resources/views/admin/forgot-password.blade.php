@@ -100,8 +100,7 @@
             <input type="email" name="email" placeholder="Nhập email admin" required>
             <button type="submit">Gửi liên kết đặt lại mật khẩu</button>
         </form>
-
-        <a href="{{ url('admin/login') }}" class="back">← Quay lại trang đăng nhập</a>
+        <a href="{{ route('login.form') }}" class="back">← Quay lại trang đăng nhập</a>
     </div>
 </body>
 </html>
