@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Đặt lại mật khẩu - Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,7 +15,7 @@
             margin: 0;
         }
 
-        .login-container {
+        .container {
             background-color: white;
             padding: 40px;
             border-radius: 10px;
@@ -23,10 +23,10 @@
             width: 400px;
         }
 
-        h1 {
+        h2 {
             text-align: center;
-            margin-bottom: 25px;
             color: #333;
+            margin-bottom: 25px;
         }
 
         .input-group {
@@ -87,74 +87,69 @@
             background-color: #0056b3;
         }
 
-        .forgot-password {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .forgot-password a {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
-
         .error-message {
             color: red;
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-align: center;
+        }
+
+        .message {
+            color: green;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h1>Login</h1>
+<div class="container">
+    <h2>Đặt lại mật khẩu</h2>
 
-        <!-- Hiển thị lỗi nếu có -->
-        @if ($errors->any())
-            <div class="error-message">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
+    @if (session('message'))
+        <div class="message">{{ session('message') }}</div>
+    @endif
+
+    @if ($errors->any())
+        <div class="error-message">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('admin.reset-password') }}">
+        @csrf
+        <input type="hidden" name="token" value="{{ $token }}">
+        <input type="hidden" name="email" value="{{ $email }}">
+
+        <div class="input-group">
+            <label for="password">Mật khẩu mới:</label>
+            <div class="input-wrapper">
+                <input type="password" name="password" id="password" required>
+                <button type="button" class="eye-btn" onclick="togglePassword('password')">👁️</button>
             </div>
-        @endif
+        </div>
 
-        <form action="{{ url('admin/login') }}" method="POST">
-            @csrf
-            <div class="input-group">
-                <label for="email">Email:</label>
-                <div class="input-wrapper">
-                    <input type="email" name="email" id="email" required>
-                </div>
+        <div class="input-group">
+            <label for="password_confirmation">Xác nhận mật khẩu:</label>
+            <div class="input-wrapper">
+                <input type="password" name="password_confirmation" id="password_confirmation" required>
+                <button type="button" class="eye-btn" onclick="togglePassword('password_confirmation')">👁️</button>
             </div>
+        </div>
 
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <div class="input-wrapper">
-                    <input type="password" name="password" id="password" required>
-                    <button type="button" class="eye-btn" onclick="togglePassword('password')">👁️</button>
-                </div>
-            </div>
+        <button type="submit">Đặt lại mật khẩu</button>
+    </form>
+</div>
 
-            <button type="submit">Login</button>
-
-            <div class="forgot-password">
-                <a href="{{ route('admin.forgot-password') }}">Quên mật khẩu?</a>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        function togglePassword(id) {
-            const input = document.getElementById(id);
-            input.type = input.type === "password" ? "text" : "password";
-        }
-    </script>
+<script>
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
+</script>
 
 </body>
 </html>
