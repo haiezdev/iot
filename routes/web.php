@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminResetPasswordController;
 use App\Http\Controllers\UnifiedLoginController;
-
+use App\Http\Controllers\DeviceGroupController;
+use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\CommandListController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AssignProfileController;
 /*
 |--------------------------------------------------------------------------
 | Default route
@@ -38,6 +42,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [AdminController::class, 'index'])->name('users.index'); 
 });
 
+Route::middleware(['auth', 'teamlead'])->group(function () {
+    Route::resource('device-groups', DeviceGroupController::class);
+    Route::resource('devices', DeviceController::class);
+    Route::resource('command-lists', CommandListController::class);
+    Route::resource('profiles', ProfileController::class);
+    Route::resource('assign-profile', AssignProfileController::class);
+    Route::resource('profiles', ProfileController::class);
+    Route::resource('assign-profile', AssignProfileController::class)->only([
+        'index', 'create', 'store', 'destroy'
+    ]);
+});
+
 /*
 |--------------------------------------------------------------------------
 | ADMIN ROUTES (auth:admin)
@@ -68,4 +84,5 @@ Route::prefix('admin')->group(function () {
         Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
+    
 });

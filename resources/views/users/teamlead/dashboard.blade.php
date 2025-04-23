@@ -18,9 +18,11 @@
     <div class="sidebar">
         <h2>AIoT Team Lead</h2>
         <a href="{{ route('teamlead.dashboard') }}">🏠 Trang chủ</a>
-        <a href="#">📟 Quản lý thiết bị & nhóm</a>
-        <a href="#">📑 Danh sách lệnh</a>
-        <a href="#">👤 Gán hồ sơ cho operator</a>
+        <a href="{{ route('device-groups.index') }}">📟 Quản lý nhóm thiết bị</a>
+        <a href="{{ route('devices.index') }}">💻 Quản lý thiết bị</a>
+        <a href="{{ route('command-lists.index') }}">📑 Danh sách lệnh</a>
+        <a href="{{ route('profiles.index') }}">🗂️ Quản lý hồ sơ</a>
+        <a href="{{ route('assign-profile.index') }}">👤 Gán hồ sơ cho operator</a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit">🚪 Đăng xuất</button>
@@ -29,6 +31,8 @@
 
     <div class="main-content">
         <h1>Chào mừng Team Lead!</h1>
+        <!-- Nội dung dashboard, hoặc yield content ở đây -->
+        @yield('content')
     </div>
 </body>
 </html>

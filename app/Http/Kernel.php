@@ -22,7 +22,11 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
-
+    protected $routeMiddleware = [
+        // ...
+        'teamlead' => \App\Http\Middleware\CheckTeamLead::class,
+    ];
+    
     /**
      * The application's route middleware groups.
      *
