@@ -1,10 +1,13 @@
+
+
 ---
+
 ```markdown
 # 🛰️ AIoT Monitor - Laravel Project
 
 A Laravel-based project for monitoring and managing IoT devices, with virtual device simulation via VMware.
 
-
+---
 
 ## 🚀 Hướng dẫn cài đặt
 
@@ -108,3 +111,17 @@ ping 192.168.1.99
 
 ---
 
+## 👨‍💻 Author
+
+**Tên bạn**  
+📧 Email: your-email@example.com  
+🔗 GitHub: [your-github-profile](https://github.com/your-github-profile)
+
+---
+
+> 💡 Bạn chỉ cần thay `<your-repo-link>` và `<project-folder>` cho phù hợp!
+```
+
+---
+
+Bạn muốn mình thêm ảnh minh họa (ví dụ: sơ đồ mạng, giao diện dashboard) vào README không? Markdown hỗ trợ nhúng hình luôn đấy!
