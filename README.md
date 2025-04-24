@@ -1,13 +1,10 @@
-Dưới đây là phiên bản được chỉnh sửa lại theo chuẩn file `README.md`, với format Markdown rõ ràng, dễ đọc và chuyên nghiệp hơn:
-
 ---
-
 ```markdown
 # 🛰️ AIoT Monitor - Laravel Project
 
 A Laravel-based project for monitoring and managing IoT devices, with virtual device simulation via VMware.
 
----
+
 
 ## 🚀 Hướng dẫn cài đặt
 
