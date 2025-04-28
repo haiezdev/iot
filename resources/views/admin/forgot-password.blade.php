@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>Khôi phục mật khẩu - Admin</title>
@@ -26,15 +26,6 @@
             text-align: center;
             margin-bottom: 20px;
             color: #333;
-        }
-
-        input[type="email"] {
-            width: 95%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
         }
 
         button {
@@ -81,11 +72,15 @@
 </head>
 <body>
     <div class="container">
+
         <h2>Khôi phục mật khẩu</h2>
 
         @if (session('message'))
-            <div class="message">{{ session('message') }}</div>
-        @endif
+    <div class="message" style="color: green; text-align: center; margin-bottom: 10px;">
+        {{ session('message') }}
+    </div>
+@endif
+
 
         @if ($errors->any())
             <div class="error-message">
@@ -95,11 +90,11 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.send-reset-link') }}" method="POST">
+        <form action="{{ route('admin.reset-password') }}" method="POST">
             @csrf
-            <input type="email" name="email" placeholder="Nhập email admin" required>
-            <button type="submit">Gửi liên kết đặt lại mật khẩu</button>
+            <button type="submit">Đặt lại mật khẩu mặc định</button>
         </form>
+
         <a href="{{ route('login.form') }}" class="back">← Quay lại trang đăng nhập</a>
     </div>
 </body>
