@@ -69,8 +69,8 @@ Route::prefix('admin')->group(function () {
     Route::get('forgot-password', [AdminResetPasswordController::class, 'showForgotForm'])->name('admin.forgot-password');
     Route::post('forgot-password', [AdminResetPasswordController::class, 'sendResetLink'])->name('admin.send-reset-link');
     Route::get('reset-password/{token}', [AdminResetPasswordController::class, 'showResetForm'])->name('admin.reset-password.form');
-    Route::post('reset-password', [AdminResetPasswordController::class, 'resetPassword'])->name('admin.reset-password');
-
+    // Route::post('reset-password', [AdminResetPasswordController::class, 'resetPassword'])->name('admin.reset-password');
+    Route::post('/admin/reset-password', [AdminResetPasswordController::class, 'resetToDefaultPassword'])->name('admin.reset-password');
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('change-password', [AdminController::class, 'showChangePasswordForm'])->name('admin.password.form');

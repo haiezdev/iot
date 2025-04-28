@@ -116,13 +116,11 @@
         <h1>Login</h1>
 
         <!-- Hiển thị lỗi nếu có -->
-        @if ($errors->any())
-            <div class="error-message">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
+        @if (session('message'))
+    <div class="message" style="color: green; text-align: center; margin-bottom: 10px;">
+        {{ session('message') }}
+    </div>
+@endif
 
         <form action="{{ route('login') }}" method="POST">
             @csrf
