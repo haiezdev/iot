@@ -10,7 +10,7 @@ class UnifiedLoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.login'); // sử dụng lại form cũ
+        return view('admin.login'); // Sử dụng lại form cũ
     }
 
     public function login(Request $request)
@@ -24,11 +24,14 @@ class UnifiedLoginController extends Controller
 
         // Thử đăng nhập với guard admin
         if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate(); // Regenerate session cho admin
             return redirect()->intended(route('admin.dashboard'));
         }
 
         // Nếu không phải admin → thử với user (operator/supervisor/teamlead)
         if (Auth::attempt($credentials)) {
+            $request->session()->regenerate(); // Regenerate session cho user
+
             $user = Auth::user();
 
             switch ($user->role) {
@@ -46,6 +49,7 @@ class UnifiedLoginController extends Controller
 
         return back()->withErrors(['email' => 'Email hoặc mật khẩu không đúng.']);
     }
+
     public function logout(Request $request)
     {
         // Nếu đang đăng nhập với guard admin
@@ -64,4 +68,3 @@ class UnifiedLoginController extends Controller
         return redirect()->route('login')->with('message', 'Đã đăng xuất thành công!');
     }
 }
-
