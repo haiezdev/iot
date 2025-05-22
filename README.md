@@ -1,66 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```markdown
+# 🛰️ AIoT Monitor - Laravel Project
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+A Laravel-based project for monitoring and managing IoT devices, with virtual device simulation via VMware.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Hướng dẫn cài đặt
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clone repository và cài đặt
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone <your-repo-link>
+cd <project-folder>
+composer install
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Tạo database & cấu hình `.env`
 
-## Laravel Sponsors
+- Tạo một database mới (MySQL), ví dụ: `aiot_monitor`
+- Mở file `.env` và cập nhật thông tin:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+DB_DATABASE=aiot_monitor
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
 
-### Premium Partners
+### 3. Tạo key ứng dụng
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+php artisan key:generate
+```
 
-## Contributing
+### 4. Chạy migrate và seed dữ liệu mẫu
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## Code of Conduct
+### 5. Khởi động server
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan serve
+```
 
-## Security Vulnerabilities
+Truy cập: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🖥️ Kết nối với thiết bị qua VMware (Linux VM)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Tạo máy ảo Linux (Ubuntu, CentOS, v.v) bằng VMware.
+2. Chọn chế độ mạng:
+   - Ưu tiên dùng **Bridge** (hoặc NAT nếu cần).
+3. Lấy địa chỉ IP của máy ảo:
+
+```bash
+ip a
+# hoặc
+ifconfig
+```
+
+Ví dụ: `192.168.1.99`
+
+4. Từ máy host (Windows), kiểm tra kết nối:
+
+```bash
+ping 192.168.1.99
+```
+
+✅ Nếu có phản hồi là kết nối thành công.
+
+5. Khi tạo mới **Device** trên web:
+   - Nhập đúng IP của máy ảo.
+   - Hệ thống sẽ kiểm tra trạng thái và tự động cập nhật (Active/Inactive).
+
+---
+
+## ⚡ Tính năng chính
+
+- ✅ Quản lý nhóm thiết bị
+- ✅ Quản lý thiết bị (Device)
+- ✅ Quản lý danh sách lệnh (Command List)
+- ✅ Quản lý hồ sơ (Profile)
+- ✅ Gán hồ sơ cho Operator
+- ✅ Dashboard riêng cho từng vai trò
+
+---
+
+## 📝 Yêu cầu hệ thống
+
+- PHP >= 8.x
+- MySQL
+- Composer
+
+---
+
+## ⚠️ Lưu ý
+
+- Nếu gặp lỗi migrate hoặc permission:
+  - Kiểm tra quyền thư mục và cấu hình database.
+- Đảm bảo **VM và máy host cùng mạng LAN** để kiểm tra được thiết bị qua IP.
+- Mọi thắc mắc, vui lòng mở issue trên GitHub.
+
+---
+
+## 👨‍💻 Author
+
+**Tên bạn**  
+📧 Email: your-email@example.com  
+🔗 GitHub: [your-github-profile](https://github.com/your-github-profile)
+
+---
+
+> 💡 Bạn chỉ cần thay `<your-repo-link>` và `<project-folder>` cho phù hợp!
+```
+
+---
+
+Bạn muốn mình thêm ảnh minh họa (ví dụ: sơ đồ mạng, giao diện dashboard) vào README không? Markdown hỗ trợ nhúng hình luôn đấy!
