@@ -71,25 +71,25 @@ class AdminController extends Controller
         return view('users.create');
     }
 
-    // Lưu user mới
-    public function storeUser(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'role' => 'required|in:operator,supervisor,team_lead',
-        ]);
+// Lưu user mới
+public function storeUser(Request $request) {
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6',
+        'role' => 'required|in:operator,supervisor,team_lead',
+    ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-        ]);
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+    ]);
 
-        return redirect()->route('users.index')->with('message', 'Tạo người dùng thành công!');
-    }
+    return redirect()->route('admin.users.index')->with('message', 'Tạo người dùng thành công!');
+}
+
 
     // Form sửa
     public function editUser($id)
