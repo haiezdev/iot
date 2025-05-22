@@ -85,7 +85,7 @@ public function storeUser(Request $request) {
         'role' => $request->role,
     ]);
 
-    return redirect()->route('users.index')->with('message', 'Tạo người dùng thành công!');
+    return redirect()->route('admin.users.index')->with('message', 'Tạo người dùng thành công!');
 }
 
 // Form sửa
