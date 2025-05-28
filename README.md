@@ -1,127 +1,90 @@
 
+# 🛰️ AIoT Monitor - Dự án Laravel
+
+Dự án Laravel để giám sát và quản lý thiết bị IoT. Thiết bị được mô phỏng bằng máy ảo VMware chạy Linux.
 
 ---
 
-```markdown
-# 🛰️ AIoT Monitor - Laravel Project
+## 🚀 Cài đặt nhanh
 
-A Laravel-based project for monitoring and managing IoT devices, with virtual device simulation via VMware.
-
----
-
-## 🚀 Hướng dẫn cài đặt
-
-### 1. Clone repository và cài đặt
+### 1. Tải mã nguồn và cài đặt thư viện
 
 ```bash
 git clone <your-repo-link>
 cd <project-folder>
 composer install
 cp .env.example .env
-```
+````
 
-### 2. Tạo database & cấu hình `.env`
+### 2. Tạo database và cấu hình `.env`
 
-- Tạo một database mới (MySQL), ví dụ: `aiot_monitor`
-- Mở file `.env` và cập nhật thông tin:
+* Tạo database MySQL, ví dụ: `aiot_monitor`
+* Mở file `.env`, sửa:
 
-```
+```env
 DB_DATABASE=aiot_monitor
 DB_USERNAME=root
 DB_PASSWORD=your_password
 ```
 
-### 3. Tạo key ứng dụng
+### 3. Tạo key và migrate
 
 ```bash
 php artisan key:generate
-```
-
-### 4. Chạy migrate và seed dữ liệu mẫu
-
-```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-### 5. Khởi động server
+### 4. Chạy server
 
 ```bash
 php artisan serve
 ```
 
-Truy cập: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+Mở trình duyệt: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
-## 🖥️ Kết nối với thiết bị qua VMware (Linux VM)
+## 🖥️ Kết nối máy ảo VMware
 
-1. Tạo máy ảo Linux (Ubuntu, CentOS, v.v) bằng VMware.
-2. Chọn chế độ mạng:
-   - Ưu tiên dùng **Bridge** (hoặc NAT nếu cần).
-3. Lấy địa chỉ IP của máy ảo:
+1. Tạo máy ảo Linux (Ubuntu, CentOS, v.v).
+2. Chọn chế độ mạng: ưu tiên **Bridge**
+3. Trong máy ảo, gõ:
 
 ```bash
 ip a
-# hoặc
-ifconfig
 ```
 
-Ví dụ: `192.168.1.99`
-
-4. Từ máy host (Windows), kiểm tra kết nối:
+4. Dùng IP đó để kiểm tra từ máy host:
 
 ```bash
-ping 192.168.1.99
+ping 192.168.x.x
 ```
 
-✅ Nếu có phản hồi là kết nối thành công.
-
-5. Khi tạo mới **Device** trên web:
-   - Nhập đúng IP của máy ảo.
-   - Hệ thống sẽ kiểm tra trạng thái và tự động cập nhật (Active/Inactive).
+5. Khi thêm thiết bị trên web, nhập đúng IP máy ảo.
 
 ---
 
 ## ⚡ Tính năng chính
 
-- ✅ Quản lý nhóm thiết bị
-- ✅ Quản lý thiết bị (Device)
-- ✅ Quản lý danh sách lệnh (Command List)
-- ✅ Quản lý hồ sơ (Profile)
-- ✅ Gán hồ sơ cho Operator
-- ✅ Dashboard riêng cho từng vai trò
+* Quản lý thiết bị và nhóm thiết bị
+* Quản lý lệnh điều khiển
+* Quản lý hồ sơ người dùng
+* Dashboard theo vai trò
 
 ---
 
-## 📝 Yêu cầu hệ thống
+## 📝 Yêu cầu
 
-- PHP >= 8.x
-- MySQL
-- Composer
-
----
-
-## ⚠️ Lưu ý
-
-- Nếu gặp lỗi migrate hoặc permission:
-  - Kiểm tra quyền thư mục và cấu hình database.
-- Đảm bảo **VM và máy host cùng mạng LAN** để kiểm tra được thiết bị qua IP.
-- Mọi thắc mắc, vui lòng mở issue trên GitHub.
+* PHP >= 8.x
+* MySQL
+* Composer
 
 ---
 
-## 👨‍💻 Author
+## ⚠️ Ghi chú
 
-**Tên bạn**  
-📧 Email: your-email@example.com  
-🔗 GitHub: [your-github-profile](https://github.com/your-github-profile)
-
----
-
-> 💡 Bạn chỉ cần thay `<your-repo-link>` và `<project-folder>` cho phù hợp!
-```
+* Kiểm tra quyền thư mục và cấu hình nếu gặp lỗi migrate
+* Đảm bảo máy host và máy ảo cùng mạng
 
 ---
-
-Bạn muốn mình thêm ảnh minh họa (ví dụ: sơ đồ mạng, giao diện dashboard) vào README không? Markdown hỗ trợ nhúng hình luôn đấy!
