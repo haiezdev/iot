@@ -19,9 +19,7 @@
     <div class="sidebar">
         <h2>AIoT Operator</h2>
         <a href="{{ route('operator.dashboard') }}">🏠 Trang chủ</a>
-        <a href="#">📟 Thiết bị được phân công</a>
-        <a href="#">📝 Gửi lệnh SSH</a>
-        <a href="#">📁 Chỉnh sửa file</a>
+        <a href="{{ route('operator.assigned.devices') }}">📟 Thiết bị được phân công</a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit">🚪 Đăng xuất</button>

@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use phpseclib3\Net\SSH2;
 use Illuminate\Http\Request;
 use App\Models\CommandList;
+use App\Models\Device;
+
 
 class CommandListController extends Controller
 {
@@ -53,4 +55,32 @@ public function update(Request $request, $id) {
         $command->delete();
         return redirect()->route('command-lists.index')->with('message', 'Xoá thành công!');
     }
+    
+
+public function sendSSH() {
+    return view('users.operator.send-ssh');
+}
+
+
+
+public function executeSSH(Request $request) {
+    $request->validate([
+        'command' => 'required|string',
+    ]);
+
+    try {
+        $ssh = new \phpseclib3\Net\SSH2('192.168.1.2'); // IP cố định
+        if (!$ssh->login('ninh', 'ninh')) {
+            return response()->json(['success' => false, 'error' => 'Đăng nhập SSH thất bại!']);
+        }
+
+        $output = nl2br($ssh->exec($request->command));
+        return response()->json(['success' => true, 'output' => $output]);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'error' => $e->getMessage()]);
+    }
+}
+
+
+
 }

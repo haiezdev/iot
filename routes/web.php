@@ -84,5 +84,22 @@ Route::prefix('admin')->group(function () {
         Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
-    
+    /*
+|--------------------------------------------------------------------------
+| OPERATOR ROUTES (auth:web, operator)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'operator'])->prefix('operator')->name('operator.')->group(function () {
+    Route::get('assigned-devices', [DeviceController::class, 'assignedToOperator'])->name('assigned.devices');
+
+    // Gửi lệnh SSH (GET: hiển thị form, POST: xử lý lệnh)
+    Route::get('send-ssh', [CommandListController::class, 'sendSSH'])->name('send.ssh');
+Route::post('send-ssh', [CommandListController::class, 'executeSSH'])->name('execute.ssh');
+
+
+    Route::get('edit-files', [ProfileController::class, 'editFiles'])->name('edit.files');
+});
+
+
 });
