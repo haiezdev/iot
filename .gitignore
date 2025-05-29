@@ -17,12 +17,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-# Bỏ qua các file SSH private key trong thư mục test/fixtures
-ssh-websocket/node_modules/ssh2/test/fixtures/id_rsa
-ssh-websocket/node_modules/ssh2/test/fixtures/id_rsa.pub
 
-# Bỏ qua toàn bộ thư mục fixtures nếu muốn chắc chắn
-ssh-websocket/node_modules/ssh2/test/fixtures/
-
-# Ngoài ra bỏ luôn node_modules (nếu chưa có)
-node_modules/
