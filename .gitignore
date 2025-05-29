@@ -9,7 +9,7 @@
 .env.backup
 .env.production
 .phpunit.result.cache
-Homestead.json
+Homestead.jsont
 Homestead.yaml
 auth.json
 npm-debug.log
@@ -17,3 +17,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+

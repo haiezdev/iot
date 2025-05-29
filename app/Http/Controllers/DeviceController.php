@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Device;
 use App\Models\DeviceGroup;
@@ -93,4 +93,16 @@ class DeviceController extends Controller
         exec($command, $output, $result);
         return $result === 0;
     }
+    
+
+public function assignedToOperator() {
+    $devices = Device::with('deviceGroup')->get();
+    foreach ($devices as $device) {
+        $device->status = $this->isDeviceOnline($device->ip_address);
+    }
+    return view('users.operator.assigned-devices', compact('devices'));
+}
+
+
+
 }
